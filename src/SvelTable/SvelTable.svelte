@@ -18,9 +18,9 @@
 
 
 	onMount(() => {
-		currentData = [...dataSet];
+		currentData = [...dataSet];//using new variable to keep the state from two-way linking with the original passed-in data set.
 		dataDisplay.set(currentData); //setting the dataDisplay state to the passed in data array.
-		for (let i = 0; i < keys.length; i += 1) {
+		for (let i = 0; i < keys.length; i += 1) {//This creates a place holder on each column name for the arrows to be displayed.
 			arrowArr.push('');
 		}
 	});
@@ -37,12 +37,13 @@
 	 */
 
 	function search(event) {
-		dataDisplay.set([...dataSet])
-		if(searchedData[searchValue]){
+		currentData = [...dataSet]
+		dataDisplay.set(currentData)//resetting the data set for a new search. This will reset any imposed filters, sorts, or searches.
+		if(searchedData[searchValue]){//if the search value has been searched for before then we are setting the state to the cached array
 			dataDisplay.set(searchedData[searchValue])
 			return
 		} else {
-		searchedData[searchValue] = $dataDisplay.filter((elem) => {
+		searchedData[searchValue] = $dataDisplay.filter((elem) => {//if no cache then filtering the data set based on the search value and storing it in the cache
 			for (let key in elem) {
 				if (elem[key].toString().includes(searchValue.toString().toLowerCase())) {
 					return elem;
@@ -59,10 +60,10 @@
 	 */
 
 	function filterBy(event, columnName) {
-		search();
-		const { value } = event.target;
-		filterValues[columnName] = value;
-		const filteredData = $dataDisplay.filter((elem) => {
+		search();//invoking search function to reset display data to searched or default array
+		const { value } = event.target;//destructuring the inputed value from the event object
+		filterValues[columnName] = value;//saving the new value into the filterValues object with its columnName as the key. This allows for multiple filters.
+		const filteredData = $dataDisplay.filter((elem) => {//filtering the data based on the key value pairs in filterValues object.
 			for (let key in filterValues){
 				if(!elem[key].toString().toLowerCase().includes(filterValues[key].toLowerCase())){
 					return false
