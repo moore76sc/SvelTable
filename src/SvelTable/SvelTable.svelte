@@ -9,21 +9,14 @@
 	export let dataSet = [];
 	let currentData = [];
 	let searchedData = {};
-	//let filteredData = {};
+	let filteredData = {};
 	let isSortedAtoZ = false;
 	let arrowArr = [];
 	let searchValue = '';
 	let filterValues = {};
 	const keys = Object.keys(dataSet[0]);
 
-	/* PSEUDOCODE
-  Import Row Component/Column Component
-    Pass required data to each component
-  Receive dataset from user (array of obj)
-    Array of objects
-      Each object is a row
-      Each key is a heading/column
-  */
+
 	onMount(() => {
 		currentData = [...dataSet];
 		dataDisplay.set(currentData); //setting the dataDisplay state to the passed in data array.
